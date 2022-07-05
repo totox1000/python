@@ -1,0 +1,7 @@
+analogia tv cable:
+
+Televisor : Vista (templates/)
+Control remoto: controlador (controllers/burgers.py)
+servicio de cable: modelo (models/burger.py)
+
+deco: server.py
