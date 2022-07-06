@@ -16,7 +16,7 @@ class Book:
     def get_all(cls):
         query = "SELECT * FROM books;"
         books = []
-        results = connectToMySQL('books').query_db(query)
+        results = connectToMySQL('libros').query_db(query)
         for row in results:
             books.append(cls(row))
         return books
@@ -24,12 +24,12 @@ class Book:
     @classmethod
     def save(cls,data):
         query = "INSERT INTO books (title,num_of_pages) VALUES (%(title)s,%(num_of_pages)s);"
-        return connectToMySQL('books').query_db(query,data)
+        return connectToMySQL('libros').query_db(query,data)
 
     @classmethod
     def get_by_id(cls,data):
         query = "SELECT * FROM books LEFT JOIN favorites ON books.id = favorites.book_id LEFT JOIN authors ON authors.id = favorites.author_id WHERE books.id = %(id)s;"
-        results = connectToMySQL('books').query_db(query,data)
+        results = connectToMySQL('libros').query_db(query,data)
 
         book = cls(results[0])
 
