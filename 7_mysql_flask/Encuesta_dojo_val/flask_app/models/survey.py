@@ -13,13 +13,14 @@ class Survey:
 
     @classmethod
     def save(cls,data):
-        query = "INSERT into surveys (name,location,language,comments) VALUES (%(name)s,%(location)s,%(language)s,%(comments)s);"
+        query = "INSERT into survey (name,location,language,comments) VALUES (%(name)s,%(location)s,%(language)s,%(comments)s);"
         return connectToMySQL('dojo_survey').query_db(query,data)
 
     @classmethod
     def get_last_survey(cls):
-        query = "SELECT * FROM surveys ORDER BY surveys.id DESC LIMIT 1;"
+        query = "SELECT * FROM survey ORDER BY survey.id DESC LIMIT 1;"
         results = connectToMySQL('dojo_survey').query_db(query)
+        print("EL QUERY FUNCIONA?", results)
         return Survey(results[0])
 
     @staticmethod
