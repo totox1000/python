@@ -1,15 +1,25 @@
 from flask import render_template,redirect,request,session
 
 from flask_app import app
-# ...server.py
 
+# burgers.py
 from flask_app.models.burger import Burger
-
+@app.route('/create', methods=['POST'])
+def create_burger():
+    # si hay errores:
+    # llamamos al método estático en el modelo Burger para validar
+    if not Burger.validate_burger(request.form):
+        # redirigir a la ruta donde se renderiza el formulario de burger
+        return redirect('/')
+    # de lo contrario, no hay errores:
+    Burger.save(request.form)
+    return redirect("/burgers")
 
 @app.route('/')
 def index():
     return render_template("index.html")
 
+# obtiene todas las hamburguesas y las devuelve en una lista de objetos de hamburguesa
 @app.route('/create',methods=['POST'])
 def create():
     data = {
@@ -22,7 +32,7 @@ def create():
     return redirect('/burgers')
 
 
-
+# obtiene todas las hamburguesas y las devuelve en una lista de objetos de hamburguesa
 @app.route('/burgers')
 def burgers():
     return render_template("results.html",all_burgers=Burger.get_all())
